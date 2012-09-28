@@ -1,0 +1,91 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from gi.repository import Gio
+import gtk
+import gtk.gdk
+import webkit 
+import os
+import random
+import sys
+import subprocess
+import urlparse, urllib2
+
+def my_sanitize(s):
+	for (old, new) in [('ñ', 'N'),
+		('á', 'a'), ('Á', 'A'),
+		('é', 'e'), ('É', 'E'),
+		('í', 'i'), ('Í', 'I'),
+		('ó', 'o'), ('Ó', 'O'),
+		('ú', 'u'), ('Ú', 'U'),
+	]:
+		s=s.replace(old, new)
+	return ''.join([c for c in s.lower() if c.isalpha()])
+
+def generate_hostname(lastname, firstname):
+	if lastname != '':
+		lastname = my_sanitize(lastname) + '-'
+	if firstname != '':
+		firstname = my_sanitize(firstname) + '-'
+	hostname = lastname + firstname
+	for i in range(0, 4):
+		hostname += random.choice("qwertyuiopasdfghjklzxcvbnm")
+	return hostname
+
+
+def set_hostname(lastname, firstname):
+	new_hostname = generate_hostname(lastname, firstname)
+	f = open('/etc/hostname', 'w')
+	f.write(new_hostname)
+	f.close()
+	f = open('/etc/hosts', 'a+')
+	f.write("\n127.0.0.1 " + new_hostname + "\n")
+	f.close()
+	os.system("hostname " + new_hostname)
+	os.system("service avahi-daemon restart")
+	os.system("xhost local:" + new_hostname)
+
+class HostnameSetupView(webkit.WebView):
+	"""
+	Widget for browsing the bullets.
+	"""
+	def __init__(self, start_page):
+		webkit.WebView.__init__(self)
+		self.connect('navigation-policy-decision-requested', self._on_navigate_decision)
+		self.load_uri(start_page)
+    
+	def _on_navigate_decision(self, view, frame, req, action, decision):
+		parts =  req.get_uri().split("://", 1)
+		if len(parts) == 2:
+			if parts[0] == 'ui':
+				params = parts[1].split("?", 1)
+				if params[0] == 'set_hostname':
+					qs = urlparse.parse_qs(params[1])
+					lastname = qs['lastname'][0] if 'lastname' in qs else ''
+					firstname = qs['firstname'][0] if 'firstname' in qs else ''
+					set_hostname(lastname, firstname)
+				return True
+		return False
+
+def build_app_window(start_page):
+	"""
+	Build application window.
+	"""
+	sw = gtk.ScrolledWindow()
+	bullet_browser = HostnameSetupView(start_page) 
+	sw.add(bullet_browser) 
+	win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+	win.add(sw) 
+	win.set_resizable(False)
+	bullet_browser.set_size_request(600, 400)
+	win.set_default_size(600, 400)
+	win.set_title("Configurar nombre de la computadora")
+	win.set_position(gtk.WIN_POS_CENTER)
+	win.connect("destroy", gtk.main_quit)
+	return win
+
+
+if __name__ == '__main__':
+	win = build_app_window("file:///usr/share/conectar-hostname-setup/pages/hostname_setup.html")
+	win.show_all()
+	gtk.main()

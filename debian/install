@@ -1,0 +1,3 @@
+pages /usr/share/conectar-hostname-setup
+conectar-hostname-setup /usr/bin
+debian/conectar-hostname-setup.desktop /usr/share/applications

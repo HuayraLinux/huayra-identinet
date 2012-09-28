@@ -1,0 +1,14 @@
+Source: conectar-hostname-setup
+Section: main
+Priority: extra
+Maintainer: Miguel Angel Garcia <miguel.garcia@gmail.com>
+Build-Depends: debhelper (>= 8.0.0), python-support
+Standards-Version: 3.9.3
+#Homepage: <insert the upstream URL, if relevant>
+Vcs-Git: git@200.55.245.7:/conectar-hostname-setup.git
+
+Package: conectar-hostname-setup
+Architecture: all
+Depends: ${python:Depends}, python (>= 2.6), python-webkit, hostname, gksu
+Description: Configurador amigable de nombre de host
+ Configura el nombre de host a partir de datos personales del usuario.
