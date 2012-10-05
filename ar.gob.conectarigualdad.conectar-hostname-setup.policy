@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+	  "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+	  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+
+  <vendor>Conectar Igualdad</vendor>
+  <vendor_url>http://www.conectarigualdad.gob.ar/</vendor_url>
+  <icon_name>conectar-hostname-setup</icon_name>
+
+  <action id="ar.gob.conectarigualdad.conectar-hostname-setup">
+    <description>Configurar nombre de host</description>
+    <message>Configurar nombre de host</message>
+    <defaults>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+  <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/python</annotate>
+  <annotate key="org.freedesktop.policykit.exec.argv1">/home/miguel/linux_para_todos/conectar-hostname-setup/conectar-hostname-setup</annotate>
+  <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+
+  </action>
+
+</policyconfig>
