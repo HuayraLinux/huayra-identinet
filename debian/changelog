@@ -1,3 +1,9 @@
+huayra-hostname-setup (0.3-1) wizy; urgency=low
+
+  * pep8 (Closes: XXX)
+
+ -- Miguel Angel Garcia <miguel.garcia@gmail.com>  Tue, 9 Oct 2012 12:02:33 -0300
+
 huayra-hostname-setup (0.2-1) wizy; urgency=low
 
   * Cambio a policykit (Closes: XXX)
