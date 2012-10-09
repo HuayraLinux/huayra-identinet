@@ -1,0 +1,77 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2012 Huayra GNU/Linux
+#
+# Author Miguel Angel Garcia <miguel.garcia@gmail.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; version 2
+# of the License
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+# USA.
+
+import os
+import sys
+from socket import gethostname
+import re
+
+
+def update_hosts(new_hostname):
+    f = open('/etc/hosts', 'r+')
+    hosts = f.read()
+    f.seek(0)
+    f.truncate()
+    hosts = re.sub(r'\b' + gethostname() + r'\b', new_hostname, hosts)
+    f.write(hosts)
+    f.close()
+
+
+def update_hostname(new_hostname):
+    f = open('/etc/hostname', 'w')
+    f.write(new_hostname)
+    f.close()
+    os.system("hostname " + new_hostname)
+
+
+def restart_avahi():
+    os.system("service avahi-daemon restart")
+
+
+def allow_X_to_host(new_hostname):
+    os.system("xhost local:" + new_hostname)
+
+
+def set_hostname(new_hostname):
+    """
+    Sets the current hostname.
+
+    Update /etc/hostname
+    Replace entry in /etc/hosts
+    Restart avahi
+    Allow access to the X from the new hostname
+    """
+    update_hosts(new_hostname)
+    update_hostname(new_hostname)
+    restart_avahi()
+    allow_X_to_host(new_hostname)
+
+
+def usage():
+    return "Usage: " + sys.argv[0] + " new_hostname"
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2 or sys.argv[1][0] == '-':
+        print usage()
+        sys.exit(1)
+    set_hostname(sys.argv[1])

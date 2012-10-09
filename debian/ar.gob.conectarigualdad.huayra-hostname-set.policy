@@ -4,21 +4,18 @@
 	  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
 
-  <vendor>Conectar Igualdad</vendor>
+  <vendor>Huayra GNU/Linux</vendor>
   <vendor_url>http://www.conectarigualdad.gob.ar/</vendor_url>
-  <icon_name>conectar-hostname-setup</icon_name>
+  <icon_name>preferences-system-network</icon_name>
 
-  <action id="ar.gob.conectarigualdad.conectar-hostname-setup">
+  <action id="ar.gob.conectarigualdad.huayra-hostname-set">
     <description>Configurar nombre de host</description>
     <message>Configurar nombre de host</message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin</allow_active>
     </defaults>
-  <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/python</annotate>
-  <annotate key="org.freedesktop.policykit.exec.argv1">/home/miguel/linux_para_todos/conectar-hostname-setup/conectar-hostname-setup</annotate>
-  <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
-
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/sbin/huayra-hostname-set</annotate>
   </action>
 
 </policyconfig>

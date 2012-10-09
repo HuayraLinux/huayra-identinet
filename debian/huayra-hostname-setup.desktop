@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Configurar nombre de host
 Comment=Configurar amigablemente el nombre de host
-Exec=gksu conectar-hostname-setup
+Exec=/usr/bin/huayra-hostname-setup
 Terminal=false
 Type=Application
-Icon=preferences-system
+Icon=preferences-system-network
 Categories=GNOME;GTK;System;

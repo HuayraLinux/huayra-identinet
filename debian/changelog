@@ -1,4 +1,10 @@
-conectar-hostname-setup (0.1-1) wizy; urgency=low
+huayra-hostname-setup (0.2-1) wizy; urgency=low
+
+  * Cambio a policykit (Closes: XXX)
+
+ -- Miguel Angel Garcia <miguel.garcia@gmail.com>  Fri, 5 Oct 2012 14:45:23 -0300
+
+huayra-hostname-setup (0.1-1) wizy; urgency=low
 
   * Initial release (Closes: XXX)
 

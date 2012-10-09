@@ -1,3 +1,5 @@
-pages /usr/share/conectar-hostname-setup
-conectar-hostname-setup /usr/bin
-debian/conectar-hostname-setup.desktop /usr/share/applications
+pages /usr/share/huayra-hostname-setup
+bin/huayra-hostname-setup /usr/bin
+sbin/huayra-hostname-set /usr/sbin
+debian/huayra-hostname-setup.desktop /usr/share/applications
+debian/ar.gob.conectarigualdad.huayra-hostname-set.policy /usr/share/polkit-1/actions/

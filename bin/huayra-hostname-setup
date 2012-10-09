@@ -1,7 +1,25 @@
-#!/usr/bin/pkexec /usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from gi.repository import Gio
+# Copyright (C) 2012 Huayra GNU/Linux
+#
+# Author Miguel Angel Garcia <miguel.garcia@gmail.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; version 2
+# of the License
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+# USA.
+
 import gtk
 import webkit
 import os
@@ -11,6 +29,10 @@ import urllib2
 
 
 def my_sanitize(s):
+    """
+    Sanitizes the string to be used as a hostname. Removes or replace strange
+    characters.
+    """
     for (old, new) in [('ñ', 'N'),
         ('á', 'a'), ('Á', 'A'),
         ('é', 'e'), ('É', 'E'),
@@ -23,6 +45,11 @@ def my_sanitize(s):
 
 
 def generate_hostname(lastname, firstname):
+    """
+    Generates a hostname from the person lastname and firstname. Random 4
+    characters are added to the resulting string in an intent to avoid names
+    collision.
+    """
     if lastname != '':
         lastname = my_sanitize(lastname) + '-'
     if firstname != '':
@@ -35,15 +62,8 @@ def generate_hostname(lastname, firstname):
 
 def set_hostname(lastname, firstname):
     new_hostname = generate_hostname(lastname, firstname)
-    f = open('/etc/hostname', 'w')
-    f.write(new_hostname)
-    f.close()
-    f = open('/etc/hosts', 'a+')
-    f.write("\n127.0.0.1 " + new_hostname + "\n")
-    f.close()
-    os.system("hostname " + new_hostname)
-    os.system("service avahi-daemon restart")
-    os.system("xhost local:" + new_hostname)
+    code = os.system("pkexec /usr/sbin/huayra-hostname-set " + new_hostname)
+    return code == 0
 
 
 class HostnameSetupView(webkit.WebView):
@@ -57,6 +77,9 @@ class HostnameSetupView(webkit.WebView):
         self.load_uri(start_page)
 
     def _on_navigate_decision(self, view, frame, req, action, decision):
+        """
+        Dispatchs actions from pages to program methods.
+        """
         parts = req.get_uri().split("://", 1)
         if len(parts) == 2:
             if parts[0] == 'ui':
@@ -65,7 +88,8 @@ class HostnameSetupView(webkit.WebView):
                     qs = urlparse.parse_qs(params[1])
                     lastname = qs['lastname'][0] if 'lastname' in qs else ''
                     firstname = qs['firstname'][0] if 'firstname' in qs else ''
-                    set_hostname(lastname, firstname)
+                    if set_hostname(lastname, firstname):
+                        gtk.main_quit()
                 return True
         return False
 
@@ -90,6 +114,6 @@ def build_app_window(start_page):
 
 if __name__ == '__main__':
     win = build_app_window(
-        "file:///usr/share/conectar-hostname-setup/pages/hostname_setup.html")
+        "file:///usr/share/huayra-hostname-setup/pages/hostname_setup.html")
     win.show_all()
     gtk.main()
