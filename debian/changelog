@@ -1,3 +1,10 @@
+huayra-hostname-setup (0.4-1) testing; urgency=low
+
+  * Mostrar nombre de host generado
+  * Reemplazar las letras aleatorias por dia y mes de nacimiento
+
+ -- Miguel Angel Garcia <miguel.garcia@gmail.com>  Mon, 5 Nov 2012 17:37:22 -0300
+
 huayra-hostname-setup (0.3-1) wizy; urgency=low
 
   * pep8 (Closes: XXX)

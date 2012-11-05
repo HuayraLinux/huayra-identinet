@@ -26,7 +26,7 @@ import os
 import random
 import urlparse
 import urllib2
-
+import platform
 
 def my_sanitize(s):
     """
@@ -70,11 +70,20 @@ class HostnameSetupView(webkit.WebView):
     """
     Widget for browsing the bullets.
     """
-    def __init__(self, start_page):
+    def __init__(self, base_dir):
         webkit.WebView.__init__(self)
+        self.base_url = "file:///" + base_dir
+        self.base_dir = base_dir
         self.connect('navigation-policy-decision-requested',
             self._on_navigate_decision)
-        self.load_uri(start_page)
+        self.load_uri(self.base_url + "hostname_setup.html")
+
+
+    def show_hostname(self):
+        content = open(self.base_dir + 'hostname_show.html', 'r').read()
+        content = content.replace('{{ hostname }}', platform.node())
+        self.load_html_string(content, base_uri=self.base_url)
+
 
     def _on_navigate_decision(self, view, frame, req, action, decision):
         """
@@ -89,7 +98,9 @@ class HostnameSetupView(webkit.WebView):
                     lastname = qs['lastname'][0] if 'lastname' in qs else ''
                     firstname = qs['firstname'][0] if 'firstname' in qs else ''
                     if set_hostname(lastname, firstname):
-                        gtk.main_quit()
+                        self.show_hostname()
+                if params[0] == 'close':
+                    gtk.main_quit()
                 return True
         return False
 
@@ -114,6 +125,6 @@ def build_app_window(start_page):
 
 if __name__ == '__main__':
     win = build_app_window(
-        "file:///usr/share/huayra-hostname-setup/pages/hostname_setup.html")
+        "/usr/share/huayra-hostname-setup/pages/")
     win.show_all()
     gtk.main()

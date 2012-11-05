@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Configurar nombre de host
-Comment=Configurar amigablemente el nombre de host
+Name=Configurár el nombre de tu computadora
+Comment=Configurar amigablemente el nombre de tu computadora
 Exec=/usr/bin/huayra-hostname-setup
 Terminal=false
 Type=Application
