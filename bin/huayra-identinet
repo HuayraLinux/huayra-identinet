@@ -23,65 +23,36 @@
 import gtk
 import webkit
 import os
-import random
 import urlparse
-import urllib2
 import platform
+import subprocess
 
-def my_sanitize(s):
-    """
-    Sanitizes the string to be used as a hostname. Removes or replace strange
-    characters.
-    """
-    for (old, new) in [('ñ', 'N'),
-        ('á', 'a'), ('Á', 'A'),
-        ('é', 'e'), ('É', 'E'),
-        ('í', 'i'), ('Í', 'I'),
-        ('ó', 'o'), ('Ó', 'O'),
-        ('ú', 'u'), ('Ú', 'U'),
-    ]:
-        s = s.replace(old, new)
-    return ''.join([c for c in s.lower() if c.isalpha()])
-
-
-def generate_hostname(lastname, firstname):
-    """
-    Generates a hostname from the person lastname and firstname. Random 4
-    characters are added to the resulting string in an intent to avoid names
-    collision.
-    """
-    if lastname != '':
-        lastname = my_sanitize(lastname) + '-'
-    if firstname != '':
-        firstname = my_sanitize(firstname) + '-'
-    hostname = lastname + firstname
-    for i in range(0, 4):
-        hostname += random.choice("qwertyuiopasdfghjklzxcvbnm")
-    return hostname
-
-
-def set_hostname(lastname, firstname):
-    new_hostname = generate_hostname(lastname, firstname)
-    code = os.system("pkexec /usr/sbin/huayra-hostname-set " + new_hostname)
+def set_hostname(new_hostname):
+    code = os.system("pkexec /usr/sbin/huayra-identinet-set " + new_hostname)
     return code == 0
 
 
-class HostnameSetupView(webkit.WebView):
+def get_hostname():
+	return subprocess.check_output("hostname")
+
+class IdentinetSetupView(webkit.WebView):
     """
-    Widget for browsing the bullets.
+    Widget for hostname setup.
     """
     def __init__(self, base_dir):
         webkit.WebView.__init__(self)
+        self.get_property("settings").set_property(
+            "enable-default-context-menu", False)
         self.base_url = "file:///" + base_dir
         self.base_dir = base_dir
         self.connect('navigation-policy-decision-requested',
             self._on_navigate_decision)
-        self.load_uri(self.base_url + "hostname_setup.html")
+        self.show_page("identinet_setup.html")
+        
 
-
-    def show_hostname(self):
-        content = open(self.base_dir + 'hostname_show.html', 'r').read()
-        content = content.replace('{{ hostname }}', platform.node())
+    def show_page(self, page):
+        content = open(self.base_dir + page, 'r').read()
+        content = content.replace('{{ hostname }}', get_hostname())
         self.load_html_string(content, base_uri=self.base_url)
 
 
@@ -95,10 +66,9 @@ class HostnameSetupView(webkit.WebView):
                 params = parts[1].split("?", 1)
                 if params[0] == 'set_hostname':
                     qs = urlparse.parse_qs(params[1])
-                    lastname = qs['lastname'][0] if 'lastname' in qs else ''
-                    firstname = qs['firstname'][0] if 'firstname' in qs else ''
-                    if set_hostname(lastname, firstname):
-                        self.show_hostname()
+                    hostname = qs['hostname'][0] if 'hostname' in qs else ''
+                    if set_hostname(hostname):
+                        self.show_page("identinet_setup.html")
                 if params[0] == 'close':
                     gtk.main_quit()
                 return True
@@ -110,21 +80,22 @@ def build_app_window(start_page):
     Build application window.
     """
     sw = gtk.ScrolledWindow()
-    bullet_browser = HostnameSetupView(start_page)
-    sw.add(bullet_browser)
+    identinet_view = IdentinetSetupView(start_page)
+    sw.add(identinet_view)
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.add(sw)
     win.set_resizable(False)
-    bullet_browser.set_size_request(600, 400)
+    identinet_view.set_size_request(600, 400)
     win.set_default_size(600, 400)
-    win.set_title("Configurar nombre de la computadora")
+    win.set_title("Huayra Identinet")
     win.set_position(gtk.WIN_POS_CENTER)
+    win.set_icon_from_file("/usr/share/icons/hicolor/scalable/apps/huayra-identinet.svg")
     win.connect("destroy", gtk.main_quit)
     return win
 
 
 if __name__ == '__main__':
     win = build_app_window(
-        "/usr/share/huayra-hostname-setup/pages/")
+        "/usr/share/huayra-identinet/pages/")
     win.show_all()
     gtk.main()

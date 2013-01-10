@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Configurár el nombre de tu computadora
+Name=Huayra Identinet
 Comment=Configurar amigablemente el nombre de tu computadora
-Exec=/usr/bin/huayra-hostname-setup
+Exec=/usr/bin/huayra-identinet
 Terminal=false
 Type=Application
-Icon=preferences-system-network
+Icon=huayra-identinet
 Categories=GNOME;GTK;System;

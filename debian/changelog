@@ -1,3 +1,9 @@
+huayra-identinet (0.5-1) testing; urgency=low
+
+  * Cambio de nombre de la app y estetica.
+
+ -- Miguel Angel Garcia <miguel.garcia@gmail.com>  Wed, 9 Jan 2013 10:35:14 -0300
+
 huayra-hostname-setup (0.4-1) testing; urgency=low
 
   * Mostrar nombre de host generado

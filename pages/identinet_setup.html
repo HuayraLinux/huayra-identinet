@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/utils.js" type="text/javascript"></script>
+	</head>
+<body backgrosund="img/background.png">
+	<div id="wrapper">
+		<form action="ui://set_hostname" method="get" onsubmit="return validar();">
+			<div id="content">
+				<p>El nombre de tu computadora es:</p>
+				<p style="margin: 20px 120px">{{ hostname }}</p>
+				<p>Ingresá nuevo nombre:<span class="help">(solo letras, números y el guión medio, nada más)</span></p>
+				<input type="text" name="hostname" id="hostname"
+					style="width: 425px; margin-top: 50px;"
+					onkeyup="validar();"
+				/>
+				<img src="img/pana-gris.png" id="indicador"/>
+			</div>
+			<div id="navigation">
+				<input type="submit" value="Aceptar" name="accept" id="accept" disabled="disabled"/>
+				<input type="button" value="Cancelar" name="close" id="close" onclick="quit();"/>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

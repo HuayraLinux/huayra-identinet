@@ -1,5 +1,6 @@
-pages /usr/share/huayra-hostname-setup
-bin/huayra-hostname-setup /usr/bin
-sbin/huayra-hostname-set /usr/sbin
-debian/huayra-hostname-setup.desktop /usr/share/applications
-debian/ar.gob.conectarigualdad.huayra-hostname-set.policy /usr/share/polkit-1/actions/
+pages /usr/share/huayra-identinet
+bin/huayra-identinet /usr/bin
+sbin/huayra-identinet-set /usr/sbin
+debian/huayra-identinet.desktop /usr/share/applications
+debian/ar.gob.conectarigualdad.huayra-identinet-set.policy /usr/share/polkit-1/actions
+debian/huayra-identinet.svg /usr/share/icons/hicolor/scalable/apps

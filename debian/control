@@ -1,16 +1,15 @@
-Source: huayra-hostname-setup
+Source: huayra-identinet
 Section: main
 Priority: extra
 Maintainer: Miguel Angel Garcia <miguel.garcia@gmail.com>
 Build-Depends: debhelper (>= 8.0.0), python-support
 Standards-Version: 3.9.3
 #Homepage: <insert the upstream URL, if relevant>
-Vcs-Git: git@200.55.245.7:/conectar-hostname-setup.git
+Vcs-Git: git@200.55.245.7:/huayra-identinet.git
 
-Package: huayra-hostname-setup
+Package: huayra-identinet
 Architecture: all
 Depends: ${python:Depends}, python (>= 2.6), python-webkit, hostname, policykit-1
-Conflicts: conectar-hostname-setup
-Replaces: conectar-hostname-setup
-Description: Configurador amigable de nombre de host
- Configura el nombre de host a partir de datos personales del usuario.
+Conflicts: conectar-hostname-setup, huayra-hostname-setup
+Replaces: conectar-hostname-setup, huayra-hostname-setup
+Description: Configurar amigablemente el nombre de host.
