@@ -13,3 +13,4 @@ Depends: ${python:Depends}, python (>= 2.6), python-webkit, hostname, policykit-
 Conflicts: conectar-hostname-setup, huayra-hostname-setup
 Replaces: conectar-hostname-setup, huayra-hostname-setup
 Description: Configurar amigablemente el nombre de host.
+ Establecer la identidad de la computadora de manera sencilla.

@@ -1,3 +1,9 @@
+huayra-identinet (0.5-2) testing; urgency=low
+
+  * Mejoras en el empaquetado.
+
+ -- Miguel Angel Garcia <miguel.garcia@gmail.com>  Thu, 10 Jan 2013 13:20:55 -0300
+
 huayra-identinet (0.5-1) testing; urgency=low
 
   * Cambio de nombre de la app y estetica.
