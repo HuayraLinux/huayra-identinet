@@ -27,13 +27,15 @@ import urlparse
 import platform
 import subprocess
 
+
 def set_hostname(new_hostname):
     code = os.system("pkexec /usr/sbin/huayra-identinet-set " + new_hostname)
     return code == 0
 
 
 def get_hostname():
-	return subprocess.check_output("hostname")
+    return subprocess.check_output("hostname")
+
 
 class IdentinetSetupView(webkit.WebView):
     """
@@ -48,13 +50,11 @@ class IdentinetSetupView(webkit.WebView):
         self.connect('navigation-policy-decision-requested',
             self._on_navigate_decision)
         self.show_page("identinet_setup.html")
-        
 
     def show_page(self, page):
         content = open(self.base_dir + page, 'r').read()
         content = content.replace('{{ hostname }}', get_hostname())
         self.load_html_string(content, base_uri=self.base_url)
-
 
     def _on_navigate_decision(self, view, frame, req, action, decision):
         """
@@ -89,7 +89,8 @@ def build_app_window(start_page):
     win.set_default_size(600, 400)
     win.set_title("Huayra Identinet")
     win.set_position(gtk.WIN_POS_CENTER)
-    win.set_icon_from_file("/usr/share/icons/hicolor/scalable/apps/huayra-identinet.svg")
+    path = "/usr/share/icons/hicolor/scalable/apps/"
+    win.set_icon_from_file(path + "huayra-identinet.svg")
     win.connect("destroy", gtk.main_quit)
     return win
 
