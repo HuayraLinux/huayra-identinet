@@ -24,7 +24,6 @@ import gtk
 import webkit
 import os
 import urlparse
-import platform
 import subprocess
 
 

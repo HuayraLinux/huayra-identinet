@@ -1,3 +1,9 @@
+huayra-identinet (0.5-3) testing; urgency=low
+
+  * Correcciones de textos y pep8
+
+ -- Hector Sanchez  <hsanchez@pressenter.com.ar>  Fri, 18 Jan 2013 17:43:43 -0300
+
 huayra-identinet (0.5-2) testing; urgency=low
 
   * Mejoras en el empaquetado.

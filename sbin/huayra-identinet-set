@@ -27,27 +27,31 @@ import re
 
 
 def update_hosts(new_hostname):
-    f = open('/etc/hosts', 'r+')
-    hosts = f.read()
-    f.seek(0)
-    f.truncate()
+    """ Update hosts with new hostname """
+    fhost = open('/etc/hosts', 'r+')
+    hosts = fhost.read()
+    fhost.seek(0)
+    fhost.truncate()
     hosts = re.sub(r'\b' + gethostname() + r'\b', new_hostname, hosts)
-    f.write(hosts)
-    f.close()
+    fhost.write(hosts)
+    fhost.close()
 
 
 def update_hostname(new_hostname):
-    f = open('/etc/hostname', 'w')
-    f.write(new_hostname)
-    f.close()
+    """ Update hostname with new hostname """
+    fhost = open('/etc/hostname', 'w')
+    fhost.write(new_hostname)
+    fhost.close()
     os.system("hostname " + new_hostname)
 
 
 def restart_avahi():
+    """ Restart the avahi daemon """
     os.system("service avahi-daemon restart")
 
 
-def allow_X_to_host(new_hostname):
+def allow_x_to_host(new_hostname):
+    """ Allow xhost """
     os.system("xhost local:" + new_hostname)
 
 
@@ -63,10 +67,11 @@ def set_hostname(new_hostname):
     update_hosts(new_hostname)
     update_hostname(new_hostname)
     restart_avahi()
-    allow_X_to_host(new_hostname)
+    allow_x_to_host(new_hostname)
 
 
 def usage():
+    """ Usage this script """
     return "Usage: " + sys.argv[0] + " new_hostname"
 
 
