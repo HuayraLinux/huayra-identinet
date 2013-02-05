@@ -1,3 +1,9 @@
+huayra-identinet (0.5-4) testing; urgency=low
+
+  * Ajustes de pep8, pylint
+
+ -- hsanchez <hsanchez@pressenter.com.ar>  Tue, 05 Feb 2013 01:40:13 -0300
+
 huayra-identinet (0.5-3) testing; urgency=low
 
   * Correcciones de textos y pep8
