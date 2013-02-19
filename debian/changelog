@@ -1,6 +1,6 @@
-huayra-identinet (0.5.5) UNRELEASED; urgency=low
+huayra-identinet (0.5.5+nmu0) unstable; urgency=low
 
-  * fix lintian:
+  * Non-maintainer upload: fix lintian
     + huayra-identinet is debian native, no dash is required.
     + include ${misc:Depends} in control (fixes lintian).
     + github url in VCS-Git field.
