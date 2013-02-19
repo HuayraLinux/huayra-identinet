@@ -1,7 +1,7 @@
 Source: huayra-identinet
 Section: main
 Priority: extra
-Maintainer: Miguel Angel Garcia <miguel.garcia@gmail.com>
+Maintainer: Miguel Angel Garcia <miguelgarcia@anses.gov.ar>
 Build-Depends: debhelper (>= 8.0.0), python-support
 Standards-Version: 3.9.3
 #Homepage: <insert the upstream URL, if relevant>
