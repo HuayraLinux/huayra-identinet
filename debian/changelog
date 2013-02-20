@@ -1,3 +1,16 @@
+huayra-identinet (0.5.5+nmu0) unstable; urgency=low
+
+  * Non-maintainer upload: fix lintian
+    + huayra-identinet is debian native, no dash is required.
+    + include ${misc:Depends} in control (fixes lintian).
+    + github url in VCS-Git field.
+    + Update Debian standards, no changes were needed.
+    + Remove Unused debian/README.*.
+    + Remove dependency on hostname, it's POSIX and shouldn't change.
+    + Change section: main (nonexisting) to admin
+
+ -- Niv Sardi <xaiki@debian.org>  Tue, 19 Feb 2013 15:08:13 -0300
+
 huayra-identinet (0.5-4) testing; urgency=low
 
   * Ajustes de pep8, pylint

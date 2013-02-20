@@ -1,15 +1,15 @@
 Source: huayra-identinet
-Section: main
+Section: admin
 Priority: extra
 Maintainer: Miguel Angel Garcia <miguelgarcia@anses.gov.ar>
 Build-Depends: debhelper (>= 8.0.0), python-support
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 #Homepage: <insert the upstream URL, if relevant>
-Vcs-Git: git@200.55.245.7:/huayra-identinet.git
+Vcs-Git: http://github.com/huayralinux/huayra-identinet
 
 Package: huayra-identinet
 Architecture: all
-Depends: ${python:Depends}, python (>= 2.6), python-webkit, hostname, policykit-1
+Depends: ${misc:Depends}, ${python:Depends}, python (>= 2.6), python-webkit, policykit-1
 Conflicts: conectar-hostname-setup, huayra-hostname-setup
 Replaces: conectar-hostname-setup, huayra-hostname-setup
 Description: Configurar amigablemente el nombre de host.
