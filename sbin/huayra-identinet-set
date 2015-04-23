@@ -52,7 +52,7 @@ def restart_avahi():
 
 def allow_x_to_host(new_hostname):
     """ Allow xhost """
-    os.system("xhost local:" + new_hostname)
+    os.system("DISPLAY=:0 xhost " + new_hostname)
 
 
 def set_hostname(new_hostname):

@@ -1,3 +1,9 @@
+huayra-identinet (0.5.5+nmu1) UNRELEASED; urgency=medium
+
+  * Arreglado el problema de xhost (issue 674 en redmine).
+
+ -- Gonza Gluzman <dggluz@gmail.com>  Wed, 15 Apr 2015 13:36:23 -0300
+
 huayra-identinet (0.5.5+nmu0) testing; urgency=low
 
   * Non-maintainer upload: fix lintian

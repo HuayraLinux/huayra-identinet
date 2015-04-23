@@ -1,39 +1,23 @@
-function quit()
-{
-    document.location = "ui://close";
-}
+var quit = function quit() {
+    document.location = 'ui://close';
+};
 
-function validar()
-{
-	valid_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-";
-	value = document.getElementById("hostname").value;
-	valid = true;
+var validar = function() {
+	var validChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-',
+		value = document.getElementById('hostname').value,
+		indicador = document.getElementById('indicador');
 
-	for(i = 0;i < value.length; i++)
-	{
-		if(valid_chars.indexOf(value[i]) < 0)
-		{
-			valid = false;
-		}
-	}
+	var result = value.length && value.split('').every(function(aChar) {
+		return validChars.indexOf(aChar) != -1;
+	});
 	
-	if(valid && value.length > 0)
-	{
-		document.getElementById("indicador").src = "img/pana-verde.png";
-		result = true;
+	if(result) {
+		indicador.src = 'img/pana-verde.png';
 	}
-	else
-	{
-		if(value.length == 0)
-		{
-			document.getElementById("indicador").src = "img/pana-gris.png";
-		}
-		else
-		{
-			document.getElementById("indicador").src = "img/pana-rojo.png";
-		}
-		result = false;
+	else {
+		indicador.src = value.length ? 'img/pana-rojo.png' : 'img/pana-gris.png';
 	}
-	document.getElementById("accept").disabled = result ? "" : "disabled";
+	document.getElementById('accept').disabled = result ? '' : 'disabled';
+
 	return result;
-}
+};
